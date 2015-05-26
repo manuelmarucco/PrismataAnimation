@@ -39,13 +39,8 @@ public class AnimApplet extends Applet implements Runnable {
         orbImage = getImage(base, "images/orb.png");
         
     // List of Orbs Setups
-		/*int Ti;
-        for(double aux: pendulumPeriodList){
-        	Ti = (int)Math.round(aux);
-        	orbs.add(new Orb(Ti));
-        }*/
-        for (int i=0; i<10; i++){
-        	orbs.add(new Orb(45+1*i));
+        for (int i=0; i<18; i++){
+        	orbs.add(new Orb(57+i));
     	}
     }
 
@@ -56,7 +51,6 @@ public class AnimApplet extends Applet implements Runnable {
     }
 
 
-    @Override
     public void run() {
         while (true) {
         	for (Orb orb: orbs){
@@ -64,7 +58,7 @@ public class AnimApplet extends Applet implements Runnable {
         	}
             repaint(); // calls paint method
             try {
-                Thread.sleep(17);
+                Thread.sleep(17);	//retardo de refresco del programa
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -75,8 +69,8 @@ public class AnimApplet extends Applet implements Runnable {
 	public void paint(Graphics g) {
     	int count = 0;
     	for (Orb orb: orbs){
-    		g.drawImage(orbImage, 160+count, orb.getY()+250, this);
-    		count += 30;
+    		g.drawImage(orbImage, 200+count, orb.getY()+250, this);
+    		count += 20;
     	}
     	
 	}
