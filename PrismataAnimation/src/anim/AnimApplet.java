@@ -14,9 +14,9 @@ public class AnimApplet extends Applet implements Runnable {
 
 	private URL base;
 	private Image image,orbImage;
-	private Graphics second;
+	private Graphics background;
 	private List<Orb> orbs = new ArrayList<Orb>();
-	//private List<double> pendulumPeriodList = new ArrayList<double>();
+	private int Norbs = 18; //Cantidad de orbes que que voy a tener
 	
     @Override
     public void init() {
@@ -39,7 +39,7 @@ public class AnimApplet extends Applet implements Runnable {
         orbImage = getImage(base, "images/orb.png");
         
     // List of Orbs Setups
-        for (int i=0; i<18; i++){
+        for (int i=0; i<Norbs; i++){
         	orbs.add(new Orb(57+i));
     	}
     }
@@ -67,30 +67,44 @@ public class AnimApplet extends Applet implements Runnable {
     
     @Override
 	public void paint(Graphics g) {
-    	int count = 0;
+    
+    /*	
+    // Forma Rectangular
+      	int count = 0
+      	
     	for (Orb orb: orbs){
     		g.drawImage(orbImage, 200+count, orb.getY()+250, this);
     		count += 20;
     	}
+    */
+    // Forma Circular
+    	int y,ang=0,x,rad=5;
     	
+    	for (Orb orb: orbs){
+    		y = (int) Math.round((orb.getY()+rad)*Math.sin(ang));
+    		x = (int) Math.round((orb.getY()+rad)*Math.cos(ang));
+    		
+    		g.drawImage(orbImage, 400+x, y+250, this);
+    		ang += (int)Math.round(360/Norbs); //Espacio en grados entre cada orb
+    	}
 	}
     
     @Override
    	public void update(Graphics g) {
-    	
-    // Codigo que no se entiende
-    	
-       	if (image == null) {
-   			image = createImage(this.getWidth(), this.getHeight());
-   			second = image.getGraphics();
-   		}
+     	
+        // Creo imagen del background y lo actualizo constantemente como imagen
+        	
+           	if (image == null) {
+       			image = createImage(this.getWidth(), this.getHeight());
+       			background = image.getGraphics();
+       		}
 
-   		second.setColor(getBackground());
-   		second.fillRect(0, 0, getWidth(), getHeight());
-   		second.setColor(getForeground());
-   		paint(second);
+       		background.setColor(getBackground());
+       		background.fillRect(0, 0, getWidth(), getHeight());
+       		background.setColor(getForeground());
+       		paint(background);
 
-   		g.drawImage(image, 0, 0, this);
+       		g.drawImage(image, 0, 0, this);
 
    		
    	}
