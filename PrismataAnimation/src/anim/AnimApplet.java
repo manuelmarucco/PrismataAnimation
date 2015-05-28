@@ -16,7 +16,8 @@ public class AnimApplet extends Applet implements Runnable {
 	private Image image,orbImage;
 	private Graphics background;
 	private List<Orb> orbs = new ArrayList<Orb>();
-	private int Norbs = 18; //Cantidad de orbes que que voy a tener
+	private List<Adn> adnOrbs = new ArrayList<Adn>();
+	private int Norbs = 40; //Cantidad de orbes que que voy a tener
 	
     @Override
     public void init() {
@@ -37,11 +38,23 @@ public class AnimApplet extends Applet implements Runnable {
 	// Image Setups
  	
         orbImage = getImage(base, "images/orb.png");
-        
-    // List of Orbs Setups
+       
+    // List of Orbs Setups para RECTANGULAR Y CIRCULAR
         for (int i=0; i<Norbs; i++){
         	orbs.add(new Orb(57+i));
     	}
+      
+        /*
+     // List of Orbs Setups para ADN RECTANGULAR
+        for (int i=0; i<Norbs; i++){
+        	orbs.add(new Adn(2*Math.PI*57*i*11/60)); //7 = adn triple || 11 = adn
+    	}
+    	*/
+        
+        // List of Orbs Setups para ADN CIRCULAR
+        for (int i=0; i<Norbs; i++){
+        	adnOrbs.add(new Adn(2*Math.PI*57*i*57/60)); //14 = trebol || 10 = doble circulo || 13 = triple circulo rotando
+    	}												// 57 = tres circulos partidos
     }
 
     @Override
@@ -53,12 +66,17 @@ public class AnimApplet extends Applet implements Runnable {
 
     public void run() {
         while (true) {
+        	
         	for (Orb orb: orbs){
+        		orb.update();
+        	}
+        	
+        	for (Adn orb: adnOrbs){
         		orb.update();
         	}
             repaint(); // calls paint method
             try {
-                Thread.sleep(17);	//retardo de refresco del programa
+                Thread.sleep(10);	//retardo de refresco del programa
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -68,17 +86,18 @@ public class AnimApplet extends Applet implements Runnable {
     @Override
 	public void paint(Graphics g) {
     
-    /*	
+    /*
     // Forma Rectangular
-      	int count = 0
+      	int count = 0;
       	
     	for (Orb orb: orbs){
     		g.drawImage(orbImage, 200+count, orb.getY()+250, this);
     		count += 20;
     	}
     */
+    
     // Forma Circular
-    	int y,ang=0,x,rad=5;
+    	int y,ang=0,x,rad=100;
     	
     	for (Orb orb: orbs){
     		y = (int) Math.round((orb.getY()+rad)*Math.sin(ang));
@@ -87,6 +106,28 @@ public class AnimApplet extends Applet implements Runnable {
     		g.drawImage(orbImage, 400+x, y+250, this);
     		ang += (int)Math.round(360/Norbs); //Espacio en grados entre cada orb
     	}
+    
+    	/*
+    //	Forma ADN
+	int count = 0;
+      	
+    	for (Adn orb: orbs){
+    		g.drawImage(orbImage, 200+count, orb.getY()+250, this);
+    		count += 20;
+    	}
+    	*/
+    	/*
+    // Forma ADN Circular
+    	int y,ang=0,x,rad=70;
+    	
+    	for (Adn orb: adnOrbs){
+    		y = (int) Math.round((orb.getY()+rad)*Math.sin(ang));
+    		x = (int) Math.round((orb.getY()+rad)*Math.cos(ang));
+    		
+    		g.drawImage(orbImage, 400+x, y+250, this);
+    		ang += (int)Math.round(360/Norbs); //Espacio en grados entre cada orb
+    	}
+    	*/
 	}
     
     @Override
