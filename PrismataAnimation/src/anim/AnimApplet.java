@@ -39,22 +39,23 @@ public class AnimApplet extends Applet implements Runnable {
  	
         orbImage = getImage(base, "images/orb.png");
        
-    // List of Orbs Setups para RECTANGULAR Y CIRCULAR
+    // Configuracion de Lista de Orbs para RECTANGULAR Y CIRCULAR
         for (int i=0; i<Norbs; i++){
         	orbs.add(new Orb(57+i));
     	}
       
         /*
-     // List of Orbs Setups para ADN RECTANGULAR
+     // Configuracion de Lista de Orbs para ADN RECTANGULAR
         for (int i=0; i<Norbs; i++){
-        	orbs.add(new Adn(2*Math.PI*57*i*11/60)); //7 = adn triple || 11 = adn
+        	adnOrbs.add(new Adn(2*Math.PI*57*i*11/60)); //7 = adn triple || 11 = adn
     	}
     	*/
-        
-        // List of Orbs Setups para ADN CIRCULAR
+        /*
+        //Configuracion de Lista de Orbs para ADN CIRCULAR
         for (int i=0; i<Norbs; i++){
-        	adnOrbs.add(new Adn(2*Math.PI*57*i*57/60)); //14 = trebol || 10 = doble circulo || 13 = triple circulo rotando
-    	}												// 57 = tres circulos partidos
+        	adnOrbs.add(new Adn(2*Math.PI*57*i*57.3/60)); //14 = trebol || 10 = doble circulo || 13 = triple circulo rotando
+    	}
+    	*/												// 57 = tres circulos partidos //57.3 = flor partida
     }
 
     @Override
@@ -74,7 +75,7 @@ public class AnimApplet extends Applet implements Runnable {
         	for (Adn orb: adnOrbs){
         		orb.update();
         	}
-            repaint(); // calls paint method
+            repaint(); // llama al metodo paint()
             try {
                 Thread.sleep(10);	//retardo de refresco del programa
             } catch (InterruptedException e) {
@@ -106,19 +107,19 @@ public class AnimApplet extends Applet implements Runnable {
     		g.drawImage(orbImage, 400+x, y+250, this);
     		ang += (int)Math.round(360/Norbs); //Espacio en grados entre cada orb
     	}
-    
-    	/*
+   
+    /*	
     //	Forma ADN
 	int count = 0;
       	
-    	for (Adn orb: orbs){
+    	for (Adn orb: adnOrbs){
     		g.drawImage(orbImage, 200+count, orb.getY()+250, this);
     		count += 20;
     	}
     	*/
     	/*
     // Forma ADN Circular
-    	int y,ang=0,x,rad=70;
+    	int y,ang=0,x,rad=100;
     	
     	for (Adn orb: adnOrbs){
     		y = (int) Math.round((orb.getY()+rad)*Math.sin(ang));
